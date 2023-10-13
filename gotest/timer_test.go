@@ -8,8 +8,11 @@ import (
 )
 
 /*
-NewTimer在间隔x秒之后，触发一次timer事件，仅触发一次
-测试x=0时，情况：timer会被触发一次，而且不一定是马上触发，有一定微小延迟
+NewTimer在间隔d秒之后，触发一次timer事件，仅触发一次
+
+测试：d=0时会发生什么
+
+结论：timer会被触发一次，但不一定是马上触发，有一定微小延迟
 */
 func TestTimerZero(t *testing.T) {
 	wg := sync.WaitGroup{}
