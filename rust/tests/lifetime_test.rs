@@ -1,3 +1,6 @@
+/*
+    生命周期的使用
+*/
 struct MyStruct<'a> {
     data: &'a str,
 }
