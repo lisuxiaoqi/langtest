@@ -25,7 +25,7 @@ fn test_nowhere() {
 }
 
 #[test]
-fn test_owhere() {
+fn test_where() {
     let result = compare_where(3, 7);
     println!("Result: {}", result); // 输出: Result: false
 }
@@ -36,14 +36,14 @@ fn test_whereonly() {
         fn print_in_option(self);
     }
 
-    // 这里需要一个 `where` 从句，否则就要表达成 `T: Debug`（这样意思就变了），
-    // 或者改用另一种间接的方法。
+    // 我们想要的是Option<T>: Debug，因此这里需要一个 `where` 从句
+    // 不能表达成 `T: Debug`
     impl<T> PrintInOption for T
     where
         Option<T>: Debug,
     {
-        // 我们要将 `Option<T>: Debug` 作为约束，因为那是要打印的内容。
-        // 否则我们会给出错误的约束。
+        // 我们想要将 `Option<T>: Debug` 作为约束，因为那是要打印的内容。
+        // 而不是写成T: Debug。
         fn print_in_option(self) {
             println!("{:?}", Some(self));
         }

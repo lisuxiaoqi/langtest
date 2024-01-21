@@ -1,8 +1,9 @@
 /*
-    闭包的使用
-        * 闭包的定义
-        * 闭包capture变量
-        * Fn, FnOnce, FnMut
+    闭包的使用测试
+
+        闭包的定义
+        闭包capture变量
+        Fn, FnOnce, FnMut
 */
 
 //测试闭包函数的显示定义和隐式定义

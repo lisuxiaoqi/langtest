@@ -1,3 +1,10 @@
+/*
+    mod使用测试
+
+    mod封装一个域，可控制pub和private访问权限
+    mod可以通过mod关键字显示声明
+    crate名称，文件夹和文件名是隐式的mod路径
+*/
 //平级private mod
 mod same_level{
     //private函数不能被调用
