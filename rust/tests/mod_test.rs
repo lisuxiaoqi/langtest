@@ -6,35 +6,34 @@
     crate名称，文件夹和文件名是隐式的mod路径
 */
 //平级private mod
-mod same_level{
+mod same_level {
     //private函数不能被调用
-    fn private(){
+    fn private() {
         println!("private foo cannot be called")
     }
 
     //public函数能被调用
-    pub fn public(){
+    pub fn public() {
         println!("public foo can be called")
     }
 
     //pub inner mod可以被调用
-    pub mod public_inner_mod{
-        pub fn public_inner(){
+    pub mod public_inner_mod {
+        pub fn public_inner() {
             println!("public_inner foo can be called in public mod")
         }
 
-        pub fn private_inner(){
+        pub fn private_inner() {
             println!("private_inner foo can be called in public mod")
         }
     }
 
-    //private inner mod可以被调用
-    mod private_inner_mod{
-        pub fn public_inner(){
+    //private inner mod不可以被调用
+    mod private_inner_mod {
+        pub fn public_inner() {
             println!("public_inner foo cannnot be called in private mod")
         }
     }
-
 }
 
 //#[test]表示cargo test会执行该测试函数

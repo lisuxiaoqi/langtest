@@ -1,5 +1,5 @@
 /*
-   Seal是一种设计模式，用于限制trait的可访问范围
+   Seal是一种设计模式，在trait继承时使用，用于限制trait的可访问范围
    例如trait private仅想在mod内部使用，而trait public需要对外暴露，
    可trait public依赖于trait private，即 public：private
    当对外暴露public时，private也会连带暴露，因此使用seal模式，即限制private范围设置为mod内部使用，
