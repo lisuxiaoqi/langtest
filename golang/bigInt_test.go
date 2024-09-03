@@ -26,3 +26,10 @@ func TestChange(t *testing.T) {
 	b = a.Mul(a, b)
 	fmt.Println("After change", "a:", a, "b:", b)
 }
+
+// bigInt nil will crash
+func TestNil(t *testing.T) {
+	var big *big.Int
+	fmt.Println("nil big int to uint64", big.Uint64())
+
+}

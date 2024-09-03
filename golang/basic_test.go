@@ -46,7 +46,7 @@ func TestAssign(t *testing.T) {
 }
 
 /*
-map是引用传递
+map是引用传递，改变引用的值会改变原始map
 */
 func TestMapAssign(t *testing.T) {
 	s1 := make(map[string]int)
