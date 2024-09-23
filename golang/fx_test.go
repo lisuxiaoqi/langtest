@@ -42,3 +42,20 @@ func TestInvoke(t *testing.T) {
 	fx.New(opt1, opt2).Run()
 
 }
+
+// lifecycle hook与Client的生命周期相关
+// 在Onstart, Onstop中的参数无关
+func TestInvoke2(t *testing.T) {
+	opt1 := fx.Provide(fx.Annotate(
+		ClientConstructor,
+		fx.OnStart(func() {
+			fmt.Println("hello")
+		}),
+		fx.OnStop(func() {
+			fmt.Println("hello")
+		}),
+	))
+	opt2 := fx.Invoke(func(Client) {
+	})
+	fx.New(opt1, opt2).Run()
+}
