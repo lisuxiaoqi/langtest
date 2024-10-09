@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -31,4 +33,20 @@ func TestSliceAssign(t *testing.T) {
 	fmt.Println("S2", s2, len(s2), cap(s2))
 	fmt.Printf("s1 addr %p\n", s1)
 	fmt.Printf("s2 addr %p\n", s2)
+}
+
+/*
+测试copy的用法
+*/
+func TestCopy(t *testing.T) {
+	var t1 [][]byte
+	t1 = append(t1, []byte("hello"))
+	t1 = append(t1, []byte("world"))
+	assert.True(t, bytes.Equal(t1[0], []byte("hello")))
+	assert.True(t, bytes.Equal(t1[1], []byte("world")))
+
+	t2 := make([][]byte, len(t1))
+	copy(t2, t1)
+	assert.True(t, bytes.Equal(t2[0], []byte("hello")))
+	assert.True(t, bytes.Equal(t2[1], []byte("world")))
 }
