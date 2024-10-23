@@ -50,3 +50,18 @@ func TestCopy(t *testing.T) {
 	assert.True(t, bytes.Equal(t2[0], []byte("hello")))
 	assert.True(t, bytes.Equal(t2[1], []byte("world")))
 }
+
+func TestSlice(t *testing.T) {
+	s1 := []int{0, 1, 2, 3}
+	s2 := s1[1:3]
+	//s2的cap为0， 一个slice的cap，是从slice对应的底层数组的index到底层数组的结尾
+	fmt.Printf("s2: %v, cap(s2): %d\n", s2, cap(s2)) // 1
+
+	s1[1] = 10
+	fmt.Printf("s1: %v, s2: %v\n", s1, s2) // 2
+
+	//slice在append的时候，会导致重新分配内存，因此可能不会影响其他slice
+	s2 = append(s2, 100)
+	s2 = append(s2, 200)
+	fmt.Printf("s1: %v, s2: %v\n", s1, s2) // 3
+}

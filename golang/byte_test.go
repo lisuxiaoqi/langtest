@@ -14,13 +14,14 @@ func TestByteConvert(t *testing.T) {
 
 	//string to byte
 	b := []byte(s)
+	//输出十进制的byte
 	fmt.Println(b)
 
 	//byte to string
 	sFromByte := string(b)
 	fmt.Println(sFromByte)
 
-	//byte to hex string
+	//byte to hex string，输出16进制
 	sHexFromByte := hex.EncodeToString(b)
 	fmt.Println(sHexFromByte)
 
