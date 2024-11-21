@@ -21,7 +21,7 @@ fn test_declare() {
     println!("new created a:{}", a);
 
     // 先声明一个变量
-    let a_binding;
+    let a_binding: i32;
     // 后绑定前面声明的对象
     a_binding = 4;
     println!("a binding: {}", a_binding);

@@ -7,9 +7,9 @@
             所有浮点数类型，比如 f64
             字符类型，char
             元组，当且仅当其包含的类型也都是 Copy 的时候。比如，(i32, i32) 是 Copy 的，但 (i32, String) 就不是
-            不可变引用 &T ，例如转移所有权中的最后一个例子，但是注意: 可变引用 &mut T 是不可以 Copy的
+            不可变引用 &T ，例如转移所有权中的最后一个例子，但是注意: 可变引用 &mut T 是不可以 Copy的,而是move
 
-        * move。赋值时，堆上的数据采用move方式，原有数据所有权转移到新的变量中，原有变量丧失所有权，比如String。
+        * move。赋值时，堆上的数据采用move方式，原有数据所有权转移到新的变量中，原有变量丧失所有权，比如String,可变引用
         * clone。 可对堆上和栈上数据使用，clone是拷贝一份新的数据，原数据还在。
                   clone需要手动定义clone函数， 手动调用，目的是执行深拷贝。
 
@@ -27,6 +27,17 @@ fn test_ownership() {
     let r1: &str = "hello";
     let r2 = r1;
     println!("copy reference, r1:{:?}, r2:{:?}", r1, r2);
+
+    let mut m1: i32 = 5;
+    {
+        let rm1: &mut i32 = &mut m1;
+        println!("mut reference,  rm1:{:?}", rm1);
+        let rm2: &mut i32 = rm1;
+        //rm1的生命周期结束，对于可变引用，使用的是move
+        //println!("copy reference, rm1:{:?}, rm2:{:?}", rm1, rm2);
+        println!("move mut reference, rm2:{:?}", rm2);
+    }
+    println!("origin mut,  m1:{:?}", m1);
 
     //tuple: copy
     let t1: (i32, &str) = (1, "hello");

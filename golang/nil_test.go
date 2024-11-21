@@ -40,3 +40,18 @@ func TestStructNil(t *testing.T) {
 	}
 	s.foo()
 }
+
+func TestSliceNil(t *testing.T) {
+	//nil slice可以使用len
+	var b []byte
+	t.Log(len(b))
+
+	var i interface{}
+	i = b
+	//nil的类型能正常赋值给interface
+	//interface被赋值后不是nil
+	switch i.(type) {
+	case []byte:
+		t.Log("type []byte", "b is nil", b == nil, "i is not nil", i == nil)
+	}
+}

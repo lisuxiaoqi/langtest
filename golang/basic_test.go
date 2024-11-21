@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -57,4 +58,13 @@ func TestMapAssign(t *testing.T) {
 	s2["key1"] = 2
 	fmt.Println("S1", s1)
 	fmt.Println("S2", s2)
+}
+
+func TestTemp(t *testing.T) {
+	var orderId int = 548853144429
+	newOrderId := uint32(orderId)
+
+	fmt.Println("oldOrderId", orderId,
+		"maxUint32", math.MaxUint32,
+		"newOrderId:", newOrderId)
 }

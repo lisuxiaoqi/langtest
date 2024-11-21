@@ -17,4 +17,9 @@ fn test_let() {
     } = p;
 
     println!("x_value:{}, y_value:{}", x_value, y_value);
+
+    //可以只赋值部分变量
+    let Point { x: x_value2, y } = p;
+
+    println!("x_value2:{}", x_value2);
 }

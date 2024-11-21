@@ -14,6 +14,13 @@ struct Person<'a>{
     name:&'a str
 }
 
+//手动实现display trait
+impl fmt::Display for Person<'_>{
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f,"formatted:({},{})",self.age,self.name)
+    }
+}
+
 #[test]
 fn test_fmt() {
     let p = Person{age:18, name:"zs"};
@@ -28,12 +35,7 @@ fn test_fmt() {
     // }
     println!("{:#?}",p);
 
-    //使用display trait
-    //需要先手动实现对应接口
-    impl fmt::Display for Person<'_>{
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            write!(f,"formatted:({},{})",self.age,self.name)
-        }
-    }
+    //使用display trait，输出：
+    //formatted:(18,zs)
     println!("{}",p);
 }
