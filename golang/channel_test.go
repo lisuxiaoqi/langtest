@@ -35,8 +35,6 @@ func TestChannel(t *testing.T) {
 }
 
 func TestRandChannel(t *testing.T) {
-	rand.Seed(time.Now().UnixNano()) // 初始化随机数种子
-
 	const producerCount = 5
 	numbers := make(chan int, 100) // 用于传递随机数的 channel
 	var wg sync.WaitGroup          // 用于等待生产者完成
@@ -68,4 +66,27 @@ func TestRandChannel(t *testing.T) {
 	}
 
 	fmt.Printf("Final sum: %d\n", sum)
+}
+
+// close之后的channel依然可以读取，for i := range ch  就会在channel close之后退出
+func Test_Close_Channel(t *testing.T) {
+	ch := make(chan int, 10)
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 10; i++ {
+			select {
+			case ch <- i:
+			default:
+				t.Log("Value dropped", i)
+			}
+		}
+	}()
+
+	wg.Wait()
+	close(ch)
+	for i := range ch {
+		t.Log("Received", i)
+	}
 }

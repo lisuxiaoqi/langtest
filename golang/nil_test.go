@@ -18,10 +18,15 @@ func TestMapNil(t *testing.T) {
 }
 
 type SA struct {
+	i int32
 }
 
 func (s *SA) foo() {
 	fmt.Println("foo get called")
+}
+
+func (s *SA) poo() {
+	fmt.Println("poo get called", s.i)
 }
 
 /*
@@ -38,7 +43,10 @@ func TestStructNil(t *testing.T) {
 	if s == nil {
 		fmt.Println("s is nil")
 	}
+	//正常工作，foo没有使用任何SA的成员或数据
 	s.foo()
+	//panic, poo读取了s.i
+	//s.poo()
 }
 
 func TestSliceNil(t *testing.T) {
