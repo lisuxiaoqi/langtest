@@ -70,8 +70,9 @@ func Test_Nil(t *testing.T) {
 	if i == nil {
 		fmt.Println("i is nil")
 	} else {
-		fmt.Printf("i is not nil")
+		fmt.Println("i is not nil")
 	}
+	fmt.Printf("i is %#v\n", i)
 }
 
 func Test_MapNil(t *testing.T) {

@@ -13,8 +13,11 @@ func TestMapNil(t *testing.T) {
 	//读取nil不会panic
 	fmt.Println(m[0])
 	//向nil写入会panic
-	m[0] = 1
-	fmt.Println(m[0])
+	//m[0] = 1
+	//fmt.Println(m[0])
+
+	//clear map为nil没问题
+	clear(m)
 }
 
 type SA struct {
