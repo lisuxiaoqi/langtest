@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"sync"
 	"testing"
 )
 
@@ -83,4 +85,46 @@ func Test_MapNil(t *testing.T) {
 	//write will crash
 	//m[0] = 1
 	//fmt.Println(m[0])
+
+	//clear won't crash
+	clear(m)
+}
+
+func Test_Routine(t *testing.T) {
+	ch := make(chan int)
+	wg := &sync.WaitGroup{}
+	send := 0
+	for i := 0; i <= 5; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for i := 0; i <= rand.Intn(5); i++ {
+				num := rand.Intn(10)
+				fmt.Println("Send:", num)
+				send += num
+				ch <- num
+			}
+		}()
+	}
+
+	c := make(chan struct{})
+	go func() {
+		sum := 0
+		for {
+			select {
+			case n, _ := <-ch:
+				sum += n
+				//fmt.Println("receive ok", ok, n)
+			case <-c:
+				fmt.Println("sum:", sum)
+				return
+			}
+		}
+	}()
+
+	wg.Wait()
+	close(ch)
+	fmt.Println("Send total:", send)
+	c <- struct{}{}
+	close(c)
 }
