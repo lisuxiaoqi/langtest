@@ -90,3 +90,37 @@ func Test_Close_Channel(t *testing.T) {
 		t.Log("Received", i)
 	}
 }
+
+// 多个routine同时监听一个channel，只会有一个routine接收到数据
+// 这是一种**竞争接收（competing receivers）**的行为。
+// 但是close channel除外，close时，所有routine都会收到信号
+func Test_Multi_Listen(t *testing.T) {
+	c := make(chan int)
+
+	wg := sync.WaitGroup{}
+	num := 1
+	//num = 5
+	for i := 0; i < num; i++ {
+		wg.Add(1)
+		go func(id int) {
+			defer func() {
+				wg.Done()
+			}()
+
+			for {
+				select {
+				case <-c:
+					t.Log(id, "received")
+					return
+				default:
+				}
+			}
+		}(i)
+	}
+	// data会被竞争接收
+	c <- 0
+	// close会被所有的routine接收
+	//close(c)
+	wg.Wait()
+	t.Log("Quit main route")
+}

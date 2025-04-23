@@ -45,10 +45,19 @@ func TestCopy(t *testing.T) {
 	assert.True(t, bytes.Equal(t1[0], []byte("hello")))
 	assert.True(t, bytes.Equal(t1[1], []byte("world")))
 
+	//copy时t2的length,注意，不是cap，必须大等于t1的length
 	t2 := make([][]byte, len(t1))
+	//以下情况都会失败：
+	//var t2 [][]byte	未初始化
+	//t2 := make([][]byte, 0, len(t1))	length为0，虽然cap足够
+	//t2 := make([][]byte, len(t1)-1)	length小
 	copy(t2, t1)
 	assert.True(t, bytes.Equal(t2[0], []byte("hello")))
 	assert.True(t, bytes.Equal(t2[1], []byte("world")))
+
+	//nil slice之间copy不会出错
+	var t3, t4 [][]byte
+	copy(t3, t4)
 }
 
 func TestSlice(t *testing.T) {
@@ -64,4 +73,19 @@ func TestSlice(t *testing.T) {
 	s2 = append(s2, 100)
 	s2 = append(s2, 200)
 	fmt.Printf("s1: %v, s2: %v\n", s1, s2) // 3
+}
+
+// 测试slice的去重
+func TestSliceUniq(t *testing.T) {
+	arr := []int{1, 1, 2, 2, 3, 3, 4}
+
+	b := []int{}
+	setB := make(map[int]struct{})
+	for _, v := range arr {
+		if _, ok := setB[v]; !ok {
+			b = append(b, v)
+			setB[v] = struct{}{}
+		}
+	}
+	t.Log(b)
 }

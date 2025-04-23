@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"testing"
 )
@@ -33,4 +34,12 @@ func SwapEndianness(b []byte) []byte {
 		o[len(b)-1-i] = b[i]
 	}
 	return o
+}
+
+func TestJson(t *testing.T) {
+	bstr := "\"NDAwMDAwMDAwLjAwMDAwMDAwMDAwMDAwMDAwME5BTk9HVA==\""
+	var buffer []byte
+	json.Unmarshal([]byte(bstr), &buffer)
+	//json.Unmarshal(b, &buffer)
+	t.Log(string(buffer))
 }
