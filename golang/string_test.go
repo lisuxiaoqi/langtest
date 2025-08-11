@@ -34,3 +34,8 @@ func TestContains(t *testing.T) {
 	s := err.Error()
 	assert.True(t, strings.Contains(s, "no rows"))
 }
+
+func TestSubstring(t *testing.T) {
+	s := "LongStringWithLotsOfCharacters"
+	t.Log(s[len(s)-5:])
+}
