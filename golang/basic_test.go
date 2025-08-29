@@ -15,6 +15,25 @@ func TestDefaultBoolean(t *testing.T) {
 }
 
 /*
+int除以int，结果还是int，舍掉小数部分，不会向上取整
+*/
+func TestIntDivision(t *testing.T) {
+	i := 100 * uint64(30)
+	f := i / 70
+	fmt.Println("f:", f)
+}
+
+// if语句只进第一个为true的语句，其他的不执行
+func TestIf(t *testing.T) {
+	i := 2
+	if i > 1 {
+		fmt.Println("i > 1")
+	} else if i < 3 {
+		fmt.Println("i<3")
+	}
+}
+
+/*
 当struct的函数是值传递时，不会改变struct的状态，而是copy了struct
 */
 type S struct {
