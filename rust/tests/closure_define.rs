@@ -5,12 +5,20 @@
         闭包capture变量
         Fn, FnOnce, FnMut
 
+        层级关系：
+            Fn ⊆ FnMut ⊆ FnOnce
+            每个 Fn 闭包一定可以作为 FnMut 或 FnOnce 使用。
+            每个 FnMut 闭包一定可以作为 FnOnce 使用
+
         Fn:
             * 不能修改外部变量
         FnMut:
             * 可以修改闭包捕获的外部变量
         FnOnce:
-            * 只能使用一次
+            * 只能使用一次，理解为Move逻辑更适合
+                *  如果闭包内存在move操作（如赋值），则会把外部变量move到闭包中对应的新所有者，
+                   如果是只读操作，则不会move
+                * 配合move关键字，则即使只读操作，也会move
 */
 
 //测试闭包函数的显示定义和隐式定义
@@ -55,6 +63,29 @@ fn test_fnmut() {
     println!("{},{}", ret, env_var);
 }
 
+
+/*
+    FnOnce闭包，被当成FnMut使用时可以的
+*/
+#[test]
+fn test_fnmut_move() {
+    let env_var = String::from("hello world");
+
+    let mut_mv_cl = move || {
+        println!("outer env:{}", env_var);
+    };
+
+    fn test_call<F>(mut f: F)
+    where
+        F: FnMut(),
+    {
+        f()
+    }
+
+    test_call(mut_mv_cl);
+    //println!("outer env:{}", env_var)
+}
+
 #[test]
 fn test_fnonce() {
     let env_var = String::from("Hello World");
@@ -82,6 +113,6 @@ fn test_fnonce2() {
 
     onceFn();
     //使用env_var会失败，即使闭包中只读，但是使用了move关键字
-    //导致所有权转移
-    //println!("env:{}", env_var);
+    //导致所有权转移，会编译失败
+    // println!("env:{}", env_var);
 }
