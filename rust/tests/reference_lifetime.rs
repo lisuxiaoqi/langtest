@@ -24,10 +24,33 @@ fn test_lifetime() {
 }
 
 #[test]
-fn test_static(){
-    let static_ref : &'static str;
+fn test_static() {
+    let static_ref: &'static str;
     //let static_ref : &str;
     static_ref = "hello";
 
     println!("{}", static_ref)
+}
+
+/*
+    impl可以按照自己的需要声明需要的生命周期，不依赖于struct定义中是否包含生命周期
+*/
+#[test]
+fn test_impl_lifetime() {
+    struct Container<T> {
+        data: T,
+    }
+    ;
+
+    impl<'a> Container<&'a str> {
+        fn get(&self) -> &str {
+            self.data
+        }
+    }
+    ;
+
+    let s = String::from("hello");
+    let str = s.as_str();
+    let c = Container { data: str };
+    print!("{}", c.get());
 }
