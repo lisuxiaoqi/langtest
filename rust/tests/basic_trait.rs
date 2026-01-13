@@ -35,8 +35,28 @@ where
 
 #[test]
 fn test_trait() {
-    let t = MyTrait { value: "hello", add: 123 };
+    let t = MyTrait {
+        value: "hello",
+        add: 123,
+    };
     let ret = t.add(100u16);
     println!("{}, {}", ret.value, ret.add);
 }
 
+//define trait for basic type
+//
+trait Show {
+    fn show(&self);
+}
+
+impl Show for bool {
+    fn show(&self) {
+        eprintln!("hello Show trait for bool");
+    }
+}
+
+#[test]
+fn test_type_trait() {
+    let b = false;
+    <bool as Show>::show(&b);
+}

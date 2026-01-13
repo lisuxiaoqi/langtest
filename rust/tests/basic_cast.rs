@@ -26,4 +26,9 @@ fn test_as() {
     //257>255
     //结果和取模一样。257 % 256
     println!("  257 as a u8 is : {}", 257 as u8);
+
+    struct S;
+    let sa = S {};
+    let _sb: S = sa.into();
+    println!("self can into self");
 }
