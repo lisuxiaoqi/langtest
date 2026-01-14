@@ -5,8 +5,8 @@
         static：具有 'static 生命周期的，可以是可变的变量（须使用 static mut 关键字）
 */
 
-static LANGUAGE :&'static str = "Rust";
-const THRESHOLD:i32 = 10;
+static LANGUAGE: &'static str = "Rust";
+const THRESHOLD: i32 = 10;
 
 #[test]
 fn test_const() {
@@ -25,4 +25,14 @@ fn test_const() {
     // 报错！不能修改一个 `const` 常量。
     //THRESHOLD = 5;
     // 改正 ^ 注释掉此行
+}
+
+enum E {
+    First = 0,
+    Second = 2,
+}
+const FLAG: bool = E::First as u8 == 0 || E::Second as u8 == 0;
+#[test]
+fn test_const_bool() {
+    eprintln!("flag:{}", FLAG);
 }
