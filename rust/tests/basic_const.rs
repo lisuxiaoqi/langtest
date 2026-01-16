@@ -31,7 +31,7 @@ enum E {
     First = 0,
     Second = 2,
 }
-const FLAG: bool = E::First as u8 == 0 || E::Second as u8 == 0;
+const FLAG: bool = (E::First as usize) == 0 || (E::Second as usize) == 0;
 #[test]
 fn test_const_bool() {
     eprintln!("flag:{}", FLAG);
