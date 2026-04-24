@@ -5,7 +5,12 @@
 
 ## 测试方式
 ```
+//普通测试
 cargo test --test hello_test -- --show-output
+//nightly测试, unsafe使用miri
+Cargo +nightly miri test --test basic_unsafe -- --show-output
+//测试单个函数
+Cargo +nightly miri test --test basic_unsafe test_linked_list -- --show-output
 ```
 * --test指运行集成测试
 * hello_test是测试文件名称
