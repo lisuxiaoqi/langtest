@@ -166,3 +166,18 @@ fn test_endian() {
         }
     }
 }
+
+//使用*const ()扮演void*角色
+#[test]
+fn test_uni_cast() {
+    let i: u32 = 1;
+    //引用必须先降级为同类型指针
+    let type_ptr = &i as *const u32;
+    //类型参数转化为万能指针
+    let uni_ptr = type_ptr as *const ();
+    //万能指针转化为任意类型
+    let u8_ptr = uni_ptr as *const u8;
+    unsafe {
+        println!("value:{}", *u8_ptr);
+    }
+}
