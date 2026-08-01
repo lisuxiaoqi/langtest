@@ -83,3 +83,27 @@ fn foo(p1: i32, p2: String) -> (i32, String) {
     println!("function received value, copy:{}, move:{}", p1, p2);
     (p1, p2)
 }
+
+#[test]
+fn test_move() {
+    //S分配在栈上，但是也会是Move语义，因为它没有实现Copy Trait
+    struct S {
+        a: u32,
+        b: u32,
+    }
+
+    let t = S { a: 10, b: 10 };
+    let ref_a = &t;
+    let pa = ref_a as *const S as *const u8;
+    println!("address of t:{:p}, t.a:{}", pa, t.a);
+    //这里t被move
+    let new_t = t;
+    let ref_b = &new_t;
+    let pb = ref_b as *const S as *const u8;
+
+    println!("address of new_t:{:p}, new_t.a:{}", pb, new_t.a);
+    //pa还能被使用的原因，是因为它是裸指针，纯地址，纯地址指向的内容编译器不会进一步分析
+    //是否已经被move，不参与所有权检查
+    println!("address of t:{:p}", pa);
+    //println!("address of t:{:p}, t.a:{}", pa, t.a);
+}
